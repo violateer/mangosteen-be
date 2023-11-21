@@ -22,3 +22,9 @@ bin/rails s
 ## 3. ruby formatter 验证中文
 
 - 文件首行添加 `# encoding: utf-8`
+
+## 4. 加密文件
+
+```
+EDITOR="code --wait" bin/rails credentials:edit
+```

@@ -23,8 +23,17 @@ bin/rails s
 
 - 文件首行添加 `# encoding: utf-8`
 
-## 4. 加密文件
+## 4. 创建/修改加密文件
 
 ```
 EDITOR="code --wait" bin/rails credentials:edit
+```
+
+## 5. 查看密钥
+
+```
+bin/rails console
+
+Rails.application.credentials.config
+
 ```

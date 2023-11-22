@@ -6,6 +6,7 @@ RUN bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 WORKDIR /mangosteen
 ADD mangosteen-*.tar.gz ./
 RUN bundle config set --local without 'development test'
+## 使用cache中的包安装 则 在 bundle install 后面加上 --local
 RUN bundle install
 # docker run 时才会执行ENTRYPOINT
 # docker build 不会执行ENTRYPOINT

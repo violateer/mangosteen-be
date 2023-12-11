@@ -27,6 +27,9 @@ bin/rails s
 
 ```
 EDITOR="code --wait" bin/rails credentials:edit
+
+## 生成环境：
+EDITOR="code --wait" bin/rails credentials:edit --environment production
 ```
 
 ## 5. 查看密钥

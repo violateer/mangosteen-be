@@ -1,7 +1,12 @@
 require "rspec_api_documentation"
 
 RSpec.configure do |config|
-  # assertions if you prefer.
+  config.before(:each) do |spec|
+    if spec.metadata[:type].equal? :acceptance
+      header "Accept", "application/json"
+      header "Content-Type", "application/json"
+    end
+  end
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

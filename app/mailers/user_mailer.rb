@@ -1,6 +1,8 @@
+# encoding: utf-8
 class UserMailer < ApplicationMailer
-  def welcome_email(code)
-    @code = code
-    mail(to: "1828257089@qq.com", subject: "Welcome to My Awesome Site")
+  def welcome_email(email)
+    validation_code = ValidationCode.find_by_email(email)
+    @code = validation_code
+    mail(to: :email, subject: "山竹记账验证码")
   end
 end

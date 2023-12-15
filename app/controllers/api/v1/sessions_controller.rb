@@ -1,4 +1,6 @@
 # encoding: utf-8
+require "jwt"
+
 class Api::V1::SessionsController < ApplicationController
   def create
     if Rails.env.test?
@@ -18,10 +20,11 @@ class Api::V1::SessionsController < ApplicationController
       # not_found = 404
       render status: :not_found, json: { errors: "用户不存在" }
     else
+      payload = { user_id: user.id }
+      token = JWT.encode payload, Rails.application.credentials.hmac_secret, "HS256"
+
       # ok = 200
-      render status: :ok, json: {
-               jwt: "xxxxxxxxxxxxxxxxxxxxxxxx",
-             }
+      render status: :ok, json: { jwt: token }
     end
   end
 end

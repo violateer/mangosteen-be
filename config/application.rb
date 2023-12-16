@@ -34,6 +34,9 @@ module Mangosteen1
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    config.active_record.default_timezone = :local  # 设置本地时间，不加这句数据库存的还是UTC
+    config.time_zone = "Beijing"                    # 设置北京时区
+
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.

@@ -5,7 +5,7 @@ class Api::V1::ItemsController < ApplicationController
                 .per(params[:per])
     render json: { resources: items, pager: {
       page: params[:page] || 1,
-      per_page: params[:per] || 10,
+      per_page: Item.default_per_page,
       count: Item.count,
     } }
   end

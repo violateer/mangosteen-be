@@ -1,6 +1,8 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    items = Item.page(params[:page]).per(params[:per])
+    items = Item.where({ created_at: params[:created_after]..params[:created_before] })
+                .page(params[:page])
+                .per(params[:per])
     render json: { resources: items, pager: {
       page: params[:page] || 1,
       per_page: params[:per] || 10,

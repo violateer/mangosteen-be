@@ -3,25 +3,47 @@ require "rails_helper"
 
 RSpec.describe "Items", type: :request do
   describe "获取账目" do
-    it "分页" do
-      11.times { Item.create amount: 100 }
-      expect(Item.count).to eq 11
+    it "分页（未登录）" do
+      user1 = User.create email: "1@qq.com"
+      user2 = User.create email: "2@qq.com"
+      11.times { Item.create amount: 100, user_id: user1.id }
+      11.times { Item.create amount: 100, user_id: user2.id }
+
       get "/api/v1/items"
+      expect(response).to have_http_status 401
+    end
+
+    it "分页" do
+      user1 = User.create email: "1@qq.com"
+      user2 = User.create email: "2@qq.com"
+      11.times { Item.create amount: 100, user_id: user1.id }
+      11.times { Item.create amount: 100, user_id: user2.id }
+
+      post "/api/v1/session", params: { email: user1.email, code: "123456" }
+      json = JSON.parse response.body
+      jwt = json["jwt"]
+
+      get "/api/v1/items", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 10
-      get "/api/v1/items?page=2"
+      get "/api/v1/items?page=2", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 1
     end
 
     it "按时间筛选" do
-      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 2)
-      item2 = Item.create amount: 100, created_at: Time.new(2018, 1, 2)
-      item3 = Item.create amount: 100, created_at: Time.new(2019, 1, 1)
+      user1 = User.create email: "1@qq.com"
+      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 2), user_id: user1.id
+      item2 = Item.create amount: 100, created_at: Time.new(2018, 1, 2), user_id: user1.id
+      item3 = Item.create amount: 100, created_at: Time.new(2019, 1, 1), user_id: user1.id
 
-      get "/api/v1/items?created_after=2018-01-01&created_before=2018-01-03"
+      post "/api/v1/session", params: { email: user1.email, code: "123456" }
+      json = JSON.parse response.body
+      jwt = json["jwt"]
+
+      get "/api/v1/items?created_after=2018-01-01&created_before=2018-01-03", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 2
@@ -30,9 +52,14 @@ RSpec.describe "Items", type: :request do
     end
 
     it "按时间筛选（边界条件）" do
-      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1)
+      user1 = User.create email: "1@qq.com"
+      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1), user_id: user1.id
 
-      get "/api/v1/items?created_after=2018-01-01&created_before=2018-01-02"
+      post "/api/v1/session", params: { email: user1.email, code: "123456" }
+      json = JSON.parse response.body
+      jwt = json["jwt"]
+
+      get "/api/v1/items?created_after=2018-01-01&created_before=2018-01-02", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 1
@@ -40,10 +67,15 @@ RSpec.describe "Items", type: :request do
     end
 
     it "按时间筛选（只传created_after）" do
-      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1)
-      item2 = Item.create amount: 100, created_at: Time.new(2017, 1, 1)
+      user1 = User.create email: "1@qq.com"
+      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1), user_id: user1.id
+      item2 = Item.create amount: 100, created_at: Time.new(2017, 1, 1), user_id: user1.id
 
-      get "/api/v1/items?created_after=2018-01-01"
+      post "/api/v1/session", params: { email: user1.email, code: "123456" }
+      json = JSON.parse response.body
+      jwt = json["jwt"]
+
+      get "/api/v1/items?created_after=2018-01-01", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 1
@@ -51,10 +83,15 @@ RSpec.describe "Items", type: :request do
     end
 
     it "按时间筛选（只传created_before）" do
-      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1)
-      item2 = Item.create amount: 100, created_at: Time.new(2019, 1, 1)
+      user1 = User.create email: "1@qq.com"
+      item1 = Item.create amount: 100, created_at: Time.new(2018, 1, 1), user_id: user1.id
+      item2 = Item.create amount: 100, created_at: Time.new(2019, 1, 1), user_id: user1.id
 
-      get "/api/v1/items?created_before=2018-01-01"
+      post "/api/v1/session", params: { email: user1.email, code: "123456" }
+      json = JSON.parse response.body
+      jwt = json["jwt"]
+
+      get "/api/v1/items?created_before=2018-01-01", headers: { 'Authorization': "Bearer #{jwt}" }
       expect(response).to have_http_status 200
       json = JSON.parse(response.body)
       expect(json["resources"].size).to eq 1

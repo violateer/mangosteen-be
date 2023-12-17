@@ -110,27 +110,8 @@ table th, table td {
 
       <div class="article">
         <h2>获取标签</h2>
-        <h3>GET /api/v1/tags</h3>
+        <h3>GET /api/v1/tags/:id</h3>
 
-          <h3>Parameters</h3>
-          <table class="parameters table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                    <span class="name">page</span>
-                </td>
-                <td>
-                  <span class="description">页码</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
           <h3>Response Fields</h3>
           <table class="response-fields table table-striped table-bordered table-condensed">
@@ -188,14 +169,14 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Version: HTTP/1.0
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMTksImV4cCI6MTcwMjgyNzQ3N30.8HV1J6cxY2ltuS6L-ePcBE3ZYkonDWNaFCW-8yuuai4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxODAsImV4cCI6MTcwMjgyODM1M30.D2_h_EQHMsXiWokQVP6S7UlnNfqJ0DlUBTvUoKAXc34
 Accept: application/json
 Content-Type: application/json
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">GET /api/v1/tags</pre>
+          <pre class="request route highlight">GET /api/v1/tags/397</pre>
 
 
 
@@ -210,111 +191,23 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
 Vary: Accept
-ETag: W/&quot;0b3b679aca96da51664c7c84096d86ee&quot;
+ETag: W/&quot;e43fc36da324d5a1d9d150f4545efbc1&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: cea13f3f-7441-4f9a-83be-df5662d049e3
-X-Runtime: 0.007293
-Content-Length: 1609</pre>
+X-Request-Id: d4106d09-9d6f-469b-9948-4eb4d809c9e0
+X-Runtime: 0.005223
+Content-Length: 167</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
-  &quot;resources&quot;: [
-    {
-      &quot;id&quot;: 302,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.231+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.231+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 303,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.236+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.236+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 304,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.239+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.239+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 305,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.244+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.244+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 306,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.248+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.248+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 307,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.252+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.252+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 308,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.255+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.255+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 309,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.258+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.258+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 310,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.261+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.261+08:00&quot;
-    },
-    {
-      &quot;id&quot;: 311,
-      &quot;user_id&quot;: 119,
-      &quot;name&quot;: &quot;x&quot;,
-      &quot;sign&quot;: &quot;x&quot;,
-      &quot;deleted_at&quot;: null,
-      &quot;created_at&quot;: &quot;2023-12-17T21:37:57.264+08:00&quot;,
-      &quot;updated_at&quot;: &quot;2023-12-17T21:37:57.264+08:00&quot;
-    }
-  ],
-  &quot;pager&quot;: {
-    &quot;page&quot;: 1,
-    &quot;per_page&quot;: 10,
-    &quot;count&quot;: 11
+  &quot;resource&quot;: {
+    &quot;id&quot;: 397,
+    &quot;user_id&quot;: 180,
+    &quot;name&quot;: &quot;x&quot;,
+    &quot;sign&quot;: &quot;x&quot;,
+    &quot;deleted_at&quot;: null,
+    &quot;created_at&quot;: &quot;2023-12-17T21:52:33.455+08:00&quot;,
+    &quot;updated_at&quot;: &quot;2023-12-17T21:52:33.455+08:00&quot;
   }
 }</pre>
       </div>

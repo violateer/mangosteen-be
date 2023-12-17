@@ -9,8 +9,8 @@ class Api::V1::TagsController < ApplicationController
       resources: tags,
       pager: {
         page: params[:page] || 1,
-        per_page: Item.default_per_page,
-        count: Item.count,
+        per_page: Tag.default_per_page,
+        count: Tag.count,
       },
     }
   end

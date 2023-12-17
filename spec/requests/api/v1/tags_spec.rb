@@ -3,12 +3,12 @@ require "rails_helper"
 
 RSpec.describe "Tags", type: :request do
   describe "获取标签列表" do
-    it "未登录获取标签" do
+    it "未登录获取标签标签列表" do
       get "/api/v1/tags"
       expect(response).to have_http_status(401)
     end
 
-    it "登录后获取标签" do
+    it "登录后获取标签标签列表" do
       user = User.create email: "1@qq.com"
       another_user = User.create email: "2@qq.com"
       # 创建11个标签
@@ -23,6 +23,19 @@ RSpec.describe "Tags", type: :request do
       expect(response).to have_http_status(200)
       json = JSON.parse response.body
       expect(json["resources"].size).to eq 1
+    end
+
+    it "登录后删除标签，查不到" do
+      user = User.create email: "1@qq.com"
+      8.times do |i| Tag.create name: "tag#{i}", user_id: user.id, sign: "x" end
+      tag = Tag.first
+      delete "/api/v1/tags/#{tag.id}", headers: user.generate_auth_header
+      expect(response).to have_http_status(200)
+
+      get "/api/v1/tags", headers: user.generate_auth_header
+      expect(response).to have_http_status(200)
+      json = JSON.parse response.body
+      expect(json["resources"].size).to eq 7
     end
   end
 
@@ -49,6 +62,16 @@ RSpec.describe "Tags", type: :request do
       tag = Tag.create name: "tag1", user_id: another_user.id, sign: "x"
       get "/api/v1/tags/#{tag.id}", headers: user.generate_auth_header
       expect(response).to have_http_status(403)
+    end
+
+    it "登录后删除标签，查不到" do
+      user = User.create email: "1@qq.com"
+      tag = Tag.create name: "x", sign: "x", user_id: user.id
+      delete "/api/v1/tags/#{tag.id}", headers: user.generate_auth_header
+      expect(response).to have_http_status(200)
+
+      get "/api/v1/tags/#{tag.id}", headers: user.generate_auth_header
+      expect(response).to have_http_status(404)
     end
   end
 

@@ -2,9 +2,10 @@ class Api::V1::TagsController < ApplicationController
   def index
     current_user = User.find request.env["current_user_id"]
     return render status :unauthorized if current_user.nil?
-    tags = Tag.where(user_id: current_user.id)
+    tags = Tag.where(user_id: current_user.id, deleted_at: nil)
               .page(params[:page])
               .per(params[:per])
+
     render json: {
       resources: tags,
       pager: {
@@ -16,10 +17,11 @@ class Api::V1::TagsController < ApplicationController
   end
 
   def show
-    tag = Tag.find params["id"]
-    return render status: :forbidden unless tag.user_id == request.env["current_user_id"]
+    tags = Tag.where(id: params[:id], deleted_at: nil)
+    return render status: :not_found if tags.empty?
+    return render status: :forbidden unless tags[0].user_id == request.env["current_user_id"]
     render json: {
-      resource: tag,
+      resource: tags[0],
     }
   end
 

@@ -26,4 +26,35 @@ class Api::V1::ItemsController < ApplicationController
       render json: { errors: item.errors }, status: :unprocessable_entity
     end
   end
+
+  def summary
+    hash = Hash.new
+    items = Item.where(user_id: request.env["current_user_id"])
+      .where(kind: params[:kind])
+      .where(happen_at: params[:happend_after]..params[:happend_before])
+    items.each do |item|
+      if params[:group_by] == "happen_at"
+        key = item.happen_at.strftime("%F")
+        hash[key] ||= 0
+        hash[key] += item.amount
+      else
+        item.tags_id.each do |tag_id|
+          key = tag_id
+          hash[key] ||= 0
+          hash[key] += item.amount
+        end
+      end
+    end
+    groups = hash.map { |key, value| { "#{params[:group_by]}": key, amount: value } }
+    if params[:group_by] == "happen_at"
+      groups.sort! { |a, b| a[:happen_at] <=> b[:happen_at] }
+    else
+      groups.sort! { |a, b| b[:amount] <=> a[:amount] }
+    end
+
+    render json: {
+      groups: groups,
+      total: items.sum(:amount),
+    }
+  end
 end

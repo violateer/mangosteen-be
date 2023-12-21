@@ -43,6 +43,8 @@ scp -P $port  -r $vendor_dir/$vendor_1.tar.gz $user@$ip:$deploy_dir/vendor/
 yes | rm $vendor_dir/$vendor_1.tar.gz
 title '上传 Dockerfile'
 scp -P $port $current_dir/../config/host.Dockerfile $user@$ip:$deploy_dir/Dockerfile
+title '上传 nginx 配置文件'
+scp -P $port $current_dir/nginx.conf $user@$ip:$deploy_dir/nginx.conf
 title '上传 setup 脚本'
 scp -P $port $current_dir/setup_remote.sh $user@$ip:$deploy_dir/
 title '上传 API 文档'

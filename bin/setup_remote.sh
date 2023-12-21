@@ -12,8 +12,8 @@ function set_env {
     [[ ! -z "$hint" ]] && echo "> 请输入 $name: $hint" || echo "> 请输入 $name:"
     read $name
   done
-  sed -i "1s/^/export $name=${!name}\n/" ~/.zshrc
-  echo "${name} 已保存至 ~/.zshrc"
+  sed -i "1s/^/export $name=${!name}\n/" ~/.bashrc
+  echo "${name} 已保存至 ~/.bashrc"
 }
 function title {
   echo 
@@ -27,6 +27,10 @@ title '设置远程机器的环境变量'
 set_env DB_HOST
 set_env DB_PASSWORD
 set_env RAILS_MASTER_KEY '请将 config/credentials/production.key 的内容复制到这里'
+
+# 重新载入环境变量
+title "重载环境变量"
+source ~/.bashrc
 
 docker network create network1
 
@@ -81,6 +85,7 @@ docker run -d -p 8080:80 \
            --network=network1 \
            --name=$nginx_container_name \
            -v /home/$user/deploys/$version/api:/usr/share/nginx/html:ro \
+           -v /home/$user/deploys/$version/nginx.conf:/etc/nginx/nginx.conf:ro \
            nginx:latest
 
 

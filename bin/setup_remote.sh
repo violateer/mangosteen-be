@@ -1,4 +1,4 @@
-user=root
+user=mangosteen
 root=/home/mangosteen/deploys/$version
 container_name=mangosteen-prod-1
 nginx_container_name=mangosteen-nginx-1

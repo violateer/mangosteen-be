@@ -1,5 +1,7 @@
+# encoding: utf-8
 class ValidationCode < ApplicationRecord
   validates :email, presence: true
+  validates :email, format: { with: /\A.+@.+\z/, message: "请输入正确的邮箱格式" }
 
   before_create :generate_code
   after_create :send_email

@@ -14,6 +14,7 @@ class ValidationCode < ApplicationRecord
   end
 
   def send_email
+    validation_code = ValidationCode.order(created_at: :desc).find_by_email(email)
     UserMailer.welcome_email(self.email).deliver
   end
 end
